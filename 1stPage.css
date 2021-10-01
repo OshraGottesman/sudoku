@@ -1,0 +1,51 @@
+body{
+    background-color: rgb(255, 220, 226);
+}
+#userNameContainer{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 2px solid rgb(255, 80, 118);
+    margin: auto;
+    border-radius: 25px;
+    padding: 20px;
+    margin-top: 100px;
+    text-align: center;
+}
+#title{
+    position: relative;
+    margin: auto;
+    margin-bottom: 5px;
+}
+.input{
+    position: relative;
+    height: 35px;
+    width: 250px;
+    text-align: center;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1.5px solid rgb(255, 80, 118);
+    border-radius: 5px;
+
+}
+#enter{
+    position: relative;
+    height: 35px;
+    width: 100px;
+    margin: auto;
+    margin-top: 5px;
+    border: 1.5px solid rgb(255, 80, 118);
+    border-radius: 5px;
+
+}
+#enter:hover{
+    box-shadow: 1px 1px rgb(233, 136, 157);
+    background-color: rgb(255, 209, 219);
+}
+#enter:active{
+    background-color: rgb(247, 177, 192);
+    box-shadow: none;
+}

@@ -1,0 +1,117 @@
+body{
+    background-color: pink;
+}
+#container{
+    margin: auto;
+    position: relative;
+    border-radius: 25px;
+    padding: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+h1{
+    display: inline;
+    position: relative;
+    left: 20px;
+}
+#question_mark{
+    position: relative;
+    border: none;
+    background:none;
+    margin-bottom: 20px;
+    font-size: 30px;
+    left: 100px;
+}
+#floating_hint {
+    font-size: 20px;
+    visibility: hidden;
+    width: 70px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 105%;
+    left: 45px;
+    margin-left: -60px;
+  }
+#floating_hint::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+  }
+#question_mark:hover #floating_hint {
+    visibility: visible;
+    text-shadow: none;
+  }
+#question_mark:hover{
+    color: #555;
+    text-shadow: 1px 1px #d3d3d3;
+}
+#question_mark:active{
+    color: black;
+    text-shadow: none;
+}
+table{
+    position: relative;
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin: auto;
+}
+tr,td{
+    border: 1px solid black;
+    height: 46px;
+    width: 46px;
+    font-size: large;
+    font-weight: 700;
+}
+.first_row{
+    border-top: 2px solid black;
+}
+.first_colum{
+    border-left: 2px solid black;
+}
+input{
+    border: none;
+    width: 46px;
+    height: 46px;
+    padding: none;
+    margin: none;
+    text-align: center;
+    text-indent: 15px;
+    font-size: large;
+    font-weight: 700;
+    color: #f3224f;
+    background-color: #fff7f8;
+}
+.buttom_buttons{
+    position: relative;
+    height: 40px;
+    width: 150px;
+    margin: auto;
+    margin-top: 20px;
+    border: 2px solid rgb(255, 80, 118);
+    background-color: rgb(253, 167, 186);
+    border-radius: 5px;
+    font-weight: bolder;
+    font-size: large;
+}
+.buttom_buttons:hover{
+    box-shadow: 1px 1px rgb(233, 136, 157);
+    background-color: rgb(255, 209, 219);
+}
+.buttom_buttons:active{
+    background-color: rgb(247, 177, 192);
+    box-shadow: none;
+}
+#restart{
+    margin-left: 30px;
+}
+input:hover{
+    background-color: #d6b8c6;
+}
