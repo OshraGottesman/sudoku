@@ -67,7 +67,7 @@ function create_array_of_3_random_numbers(array_of_3) {
     }
     return random_of_3;
 }
-function switch_3_colums(board, random_of_3, starting_point) {
+function switch_3_colums(board, random_of_3, starting_point) { //takes 3 colums and switches them randomly
     let temp_board = [
         [],
         [],
@@ -91,7 +91,7 @@ function switch_3_colums(board, random_of_3, starting_point) {
     }
     return board;
 }
-function switch_3_rows(board, random_of_3, starting_point) {
+function switch_3_rows(board, random_of_3, starting_point) { //takes 3 rows and switches them randomly
     let temp_board = [
         [],
         [],
@@ -116,14 +116,14 @@ function switch_3_rows(board, random_of_3, starting_point) {
     }
     return board;
 }
-function create_board(board, array_of_numbers) {
+function randomize_board(board, array_of_numbers) {
     let random_numbers = [];
-    while (array_of_numbers.length != 0) {
+    while (array_of_numbers.length != 0) { //randomizes an array of 1-9
         let temp = Math.floor(Math.random() * (array_of_numbers.length - 1));
         random_numbers.push(array_of_numbers[temp]);
         array_of_numbers.splice(temp, 1);
     }
-    board = put_numbers_in_board(board, random_numbers); //michael
+    board = put_numbers_in_board(board, random_numbers); 
     board = switch_3_colums(board, create_array_of_3_random_numbers([0, 1, 2]), 0);
     board = switch_3_colums(board, create_array_of_3_random_numbers([3, 4, 5]), 3);
     board = switch_3_colums(board, create_array_of_3_random_numbers([6, 7, 8]), 6);
@@ -133,14 +133,14 @@ function create_board(board, array_of_numbers) {
     return board;
 }
 function generate_board_in_specefied_difficulty(amount_of_numbers_to_take_out){ //takes out numbers according to difficulty
-    solved_board = create_board(sudoku_template, array_of_numbers);
-    for(let i=0; i<solved_board.length; i++){
+    solved_board = randomize_board(sudoku_template, array_of_numbers);
+    for(let i=0; i<solved_board.length; i++){  //duplicates board
         for(let j=0; j<solved_board[i].length; j++){
             unsolved_board[i][j]=solved_board[i][j];
         }
     }
     counter = 0;
-    while(counter<amount_of_numbers_to_take_out){
+    while(counter<amount_of_numbers_to_take_out){ // puts zero in random places
         let colum =  Math.floor(Math.random()*9);
         let row = Math.floor(Math.random()*9);
         if(unsolved_board[row][colum] != 0){
@@ -152,30 +152,20 @@ function generate_board_in_specefied_difficulty(amount_of_numbers_to_take_out){ 
         for (i=0; i<81; i++){ //puts the board into html
             if (unsolved_board[Math.floor(i/9)][i%9] != 0) {
                 document.querySelector(`#container > table > tbody > tr:nth-child(${Math.floor(i/9)+1}) > td:nth-child(${i%9+1})`).innerText = unsolved_board[Math.floor(i/9)][i%9];
-            } else {
+            } else { //puts an input insted of the 0
                 document.querySelector(`#container > table > tbody > tr:nth-child(${Math.floor(i/9)+1}) > td:nth-child(${i%9+1})`).innerHTML = ' <input class="input" type="number">';
             }
         }
 
     return unsolved_board;
 }
-// function check_row(row){
-//     for(let i =0; i<row.length; i++){
-//         for(let j=i+1; j<row.length; j++){
-//             if(row[i]==row[j] || row[i] < "1" || row[i] > "9"){
-//                 return false;
-//             }
-//         }
-//     }
-//     return true;
-// }
-function row_good(board){
+function row_good(board){ // Check if row is good
     for ( var i = 0; i < 9; i++)
     {
         var cur = [];
         for ( var j = 0; j < 9; j++)
         {
-            if ( cur.includes(board[i][j])){
+            if ( cur.includes(board[i][j]) || board[i][j]<1 || board[i][j]>9){
                 return false
             }
             else if (board[i][j] !=null)
@@ -186,7 +176,6 @@ function row_good(board){
     }
     return true
 }
-
 // Check if col is good
 function col_good(board){
     for ( var i = 0; i < 9; i++)
@@ -194,7 +183,7 @@ function col_good(board){
         var cur = [];
         for ( var j = 0; j < 9; j++)
         {
-            if ( cur.includes(board[j][i])){
+            if ( cur.includes(board[j][i]) || board[j][i]<1 || board[j][i]>9){
                 return false
             }
             else if (board[j][i] !=null)
@@ -205,7 +194,6 @@ function col_good(board){
     }
     return true
 }
-
 // Check if box is good
 function box_good(board){
     // Create coordinates for each box in the 9x9 matrix
@@ -226,14 +214,15 @@ function box_good(board){
                 var coordinates = [...box_coordinates[i]];
                 coordinates[0] +=y;
                 coordinates[1] +=x;
+                if ( cur.includes(board[coordinates[0]][coordinates[1]]) || board[coordinates[0]][coordinates[1]]<1 || board[coordinates[0]][coordinates[1]]>9){
+                    return false
+                }
+                else if (board[coordinates[0]][coordinates[1]] != null)
+                {
+                    cur.push(board[coordinates[0]][coordinates[1]]);
+                }
             }
-            if ( cur.includes(board[coordinates[0]][coordinates[1]])){
-                return false
-            }
-            else if (board[coordinates[0]][coordinates[1]] != null)
-            {
-                cur.push(board[coordinates[0]][coordinates[1]]);
-            }
+           
         }
     }
     return true
@@ -259,144 +248,7 @@ function check_finish(){
         }
     }
     let flag = true;
-    flag = row_good(user_solved_board);
-    flag = col_good(user_solved_board);
-    flag = box_good(user_solved_board);
-    // for(i=0; i<9; i++){ //checks each row in the solved board
-    //         flag = check_row(user_solved_board[i]);
-    //     if(!flag){
-    //        alert("Try Again")
-    //        location.assign("2ndpage.html")
-    //        return false;
-    //     }
-    // }
-    // for(let c=0; c<9;c++){ //checks each colum in the solved board
-    //     let temp_colum = [];
-    //     for(let r=0; r<9; r++){
-    //         temp_colum[r] = user_solved_board[r][c];
-    //     }
-    //     flag = check_row(temp_colum);
-    //     if(!flag){
-    //         alert("Try Again")
-    //         location.assign("2ndpage.html")
-    //         return false;
-    //     }
-    // }
-    // let box_array = [ //puts 1st box in array
-    //     user_solved_board[0][0],
-    //     user_solved_board[0][1],
-    //     user_solved_board[0][2],
-    //     user_solved_board[1][0],
-    //     user_solved_board[1][1],
-    //     user_solved_board[1][2],
-    //     user_solved_board[2][0],
-    //     user_solved_board[2][1],
-    //     user_solved_board[2][2]];   
-    // flag = check_row(box_array); //checks 1st box
-    // if(flag){
-    //     let box_array = [ // puts 2nd box in array
-    //         user_solved_board[0][3],
-    //         user_solved_board[0][4],
-    //         user_solved_board[0][5],
-    //         user_solved_board[1][3],
-    //         user_solved_board[1][4],
-    //         user_solved_board[1][5],
-    //         user_solved_board[2][3],
-    //         user_solved_board[2][4],
-    //         user_solved_board[2][5]];   
-    //     flag = check_row(box_array); //checks 2nd box
-    // }
-    // if(flag){
-    //     let box_array = [ //puts 3rd box in array
-    //         user_solved_board[0][6],
-    //         user_solved_board[0][7],
-    //         user_solved_board[0][8],
-    //         user_solved_board[1][6],
-    //         user_solved_board[1][7],
-    //         user_solved_board[1][8],
-    //         user_solved_board[2][6],
-    //         user_solved_board[2][7],
-    //         user_solved_board[2][8]];   
-    //     flag = check_row(box_array); //checks 3rd box
-    // }
-    // if(flag){
-    //     let box_array = [ //puts 4th box in array
-    //         user_solved_board[3][0],
-    //         user_solved_board[3][1],
-    //         user_solved_board[3][2],
-    //         user_solved_board[4][0],
-    //         user_solved_board[4][1],
-    //         user_solved_board[4][2],
-    //         user_solved_board[5][0],
-    //         user_solved_board[5][1],
-    //         user_solved_board[5][2]];   
-    //     flag = check_row(box_array); //checks 4th box
-    // }
-    // if(flag){
-    //     let box_array = [ //puts 5th box in array
-    //         user_solved_board[3][3],
-    //         user_solved_board[3][4],
-    //         user_solved_board[3][5],
-    //         user_solved_board[4][3],
-    //         user_solved_board[4][4],
-    //         user_solved_board[4][5],
-    //         user_solved_board[5][3],
-    //         user_solved_board[5][4],
-    //         user_solved_board[5][5]];   
-    //     flag = check_row(box_array); //checks 5th box
-    // }
-    // if(flag){
-    //     let box_array = [ //puts 6th box in array
-    //         user_solved_board[3][6],
-    //         user_solved_board[3][7],
-    //         user_solved_board[3][8],
-    //         user_solved_board[4][6],
-    //         user_solved_board[4][7],
-    //         user_solved_board[4][8],
-    //         user_solved_board[5][6],
-    //         user_solved_board[5][7],
-    //         user_solved_board[5][8]];   
-    //     flag = check_row(box_array); //checks 6th box
-    // }
-    // if(flag){
-    //     let box_array = [ //puts 7th box in array
-    //         user_solved_board[6][0],
-    //         user_solved_board[6][1],
-    //         user_solved_board[6][2],
-    //         user_solved_board[7][0],
-    //         user_solved_board[7][1],
-    //         user_solved_board[7][2],
-    //         user_solved_board[8][0],
-    //         user_solved_board[8][1],
-    //         user_solved_board[8][2]];   
-    //     flag = check_row(box_array); //checks 7th box
-    // }
-    // if(flag){
-    //     let box_array = [ //puts 8th box in array
-    //         user_solved_board[6][3],
-    //         user_solved_board[6][4],
-    //         user_solved_board[6][5],
-    //         user_solved_board[7][3],
-    //         user_solved_board[7][4],
-    //         user_solved_board[7][5],
-    //         user_solved_board[8][3],
-    //         user_solved_board[8][4],
-    //         user_solved_board[8][5]];   
-    //     flag = check_row(box_array); //checks 8th box
-    // }
-    // if(flag){
-    //     let box_array = [ //puts 9th box in array
-    //         user_solved_board[6][6],
-    //         user_solved_board[6][7],
-    //         user_solved_board[6][8],
-    //         user_solved_board[7][6],
-    //         user_solved_board[7][7],
-    //         user_solved_board[7][8],
-    //         user_solved_board[8][6],
-    //         user_solved_board[8][7],
-    //         user_solved_board[8][8]];   
-    //     flag = check_row(box_array); //checks 9th box
-    // }
+    flag = row_good(user_solved_board) && col_good(user_solved_board) && box_good(user_solved_board);
     if(flag){
         alert("Congradulations!! You Did It!")
         location.assign("2ndpage.html")
@@ -408,14 +260,14 @@ function check_finish(){
         return false;
     }
 }
-function restart(){
+function restart(){ //deletes all inputs
    let a= document.querySelectorAll(".input");
    for (i=0; i<a.length; i++){
       a[i].value = "";
       a[i].style.backgroundColor = "#fff7f8";
    }
 }
-function hint(){
+function hint(){ //fills in a random input according to the original solved_board
     flag = true;
     while(flag){
         let random_number_for_hint = Math.floor(Math.random()*81);
