@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(255, 220, 226);
+    background-color: pink;
 }
 #welcomeContainer{
     display: flex;
@@ -13,6 +13,7 @@ body{
     padding: 20px;
     margin-top: 100px;
     text-align: center;
+    background-color: rgb(255, 220, 226);
 }
 #welcome{
     margin: auto;

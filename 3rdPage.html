@@ -1,121 +1,135 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Sudoku Game</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='3rdPage.css'>   
+    <link rel='stylesheet' type='text/css' media='screen' href='3rdPage.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+
+<body onload="startTime()">
     <div id="container">
-    <h1>Good Luck!</h1>
-    <button id="question_mark" onclick="hint()"><i class="fa fa-question-circle"></i> <span id="floating_hint">Hint</span></button>
-    <table>
-        <tr class="first_row">
-            <td class="first_colum" id="1"> <input type="number"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>       
-         <tr>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-        <tr>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-        <tr class="first_row">
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-        <tr>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-        <tr>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-        <tr class="first_row">
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-        <tr>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-        <tr class="last_row">
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td></td>
-            <td class="first_colum"></td>
-            <td></td>
-            <td class="last_colum"></td>
-        </tr>
-    </table>
-    <button id="finish" class="buttom_buttons" onclick="check_finish()">Finish</button>
-    <button id="restart" class="buttom_buttons" onclick="restart()">Restart</button>
-</div>
-<script src='3rdPage.js'></script>
+        <div id="timer"></div>
+        <h1>Good Luck!</h1>
+        <button id="question_mark" onclick="hint()"><i class="fa fa-question-circle"></i> <span
+                id="floating_hint">Hint</span></button>
+                <div id="congradulations_alert">
+                    <div id="congradulations"> congradulations</div>
+                    <img id="fireworks" src="fireworks.gif" alt="fireworks">
+                    <button id="switch_page_1" onclick="switch_page()">Play Again</button>
+                </div>
+                <div id="try_again_alert">
+                    <img id="try_again_gif" src="tryAgain.gif" alt="Try Again">
+                    <button id="switch_page_2" onclick="switch_page()">Play Again</button>
+                </div>
+        <table>
+            <tr class="first_row">
+                <td class="first_colum"> <input type="number"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr class="first_row">
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr class="first_row">
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+            <tr class="last_row">
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td></td>
+                <td class="first_colum"></td>
+                <td></td>
+                <td class="last_colum"></td>
+            </tr>
+        </table>
+        <button id="finish" class="buttom_buttons" onclick="check_finish()">Finish</button>
+        <button id="restart" class="buttom_buttons" onclick="restart()">Restart</button>
+    </div>
+    <script src='3rdPage.js'></script>
 </body>
+
 </html>

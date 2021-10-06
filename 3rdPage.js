@@ -1,5 +1,8 @@
 let difficulty = window.location.search;
 difficulty = difficulty.substring(1);
+let timer_run = true;
+let m = 0;
+let s = 0;
 let array_of_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const sudoku_template = [
     ["a", "b", "c", "d", "e", "f", "g", "h", "i"],
@@ -24,37 +27,40 @@ let unsolved_board = [
     [],
     []
 ]
-function put_numbers_in_board(board, random_numbers) { //Michael
-    for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board[i].length; j++) {
-            if (board[i][j] == "a") {
-                board[i][j] = random_numbers[0];
-            }
-            else if (board[i][j] == "b") {
-                board[i][j] = random_numbers[1];
-            }
-            else if (board[i][j] == "c") {
-                board[i][j] = random_numbers[2];
-            }
-            else if (board[i][j] == "d") {
-                board[i][j] = random_numbers[3];
-            }
-            else if (board[i][j] == "e") {
-                board[i][j] = random_numbers[4];
-            }
-            else if (board[i][j] == "f") {
-                board[i][j] = random_numbers[5];
-            }
-            else if (board[i][j] == "g") {
-                board[i][j] = random_numbers[6];
-            }
-            else if (board[i][j] == "h") {
-                board[i][j] = random_numbers[7];
-            }
-            else if (board[i][j] == "i") {
-                board[i][j] = random_numbers[8];
-            }
-        }
+function startTime() {
+    if (s == 59) {
+        m++;
+        s = 0;
+    }
+    else {
+        s++;
+    }
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('timer').innerHTML = m + ":" + s;
+    if (timer_run) {
+        setTimeout(startTime, 1000);
+    }
+}
+function checkTime(i) {
+    i = parseInt(i);
+    if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+    return i;
+}
+function put_numbers_in_board(board, random_numbers) { //puts numbers in board
+    let mapping = {
+        a:random_numbers[0],
+        b:random_numbers[1],
+        c:random_numbers[2],
+        d:random_numbers[3],
+        e:random_numbers[4],
+        f:random_numbers[5],
+        g:random_numbers[6],
+        h:random_numbers[7],
+        i:random_numbers[8]
+    };
+    for(let i=0;i<81;i++){
+        board[Math.floor(i / 9)][i % 9]=mapping[board[Math.floor(i / 9)][i % 9]];
     }
     return board;
 }
@@ -159,6 +165,8 @@ function generate_board_in_specefied_difficulty(amount_of_numbers_to_take_out){ 
 
     return unsolved_board;
 }
+console.log(generate_board_in_specefied_difficulty(difficulty));
+
 function row_good(board){ // Check if row is good
     for ( var i = 0; i < 9; i++)
     {
@@ -176,8 +184,7 @@ function row_good(board){ // Check if row is good
     }
     return true
 }
-// Check if col is good
-function col_good(board){
+function col_good(board){ // Check if col is good
     for ( var i = 0; i < 9; i++)
     {
         var cur = [];
@@ -194,8 +201,7 @@ function col_good(board){
     }
     return true
 }
-// Check if box is good
-function box_good(board){
+function box_good(board){ // Check if box is good
     // Create coordinates for each box in the 9x9 matrix
     const box_coordinates = [
         [0,0],[0,1],[0,2],
@@ -250,22 +256,25 @@ function check_finish(){
     let flag = true;
     flag = row_good(user_solved_board) && col_good(user_solved_board) && box_good(user_solved_board);
     if(flag){
-        alert("Congradulations!! You Did It!")
-        location.assign("2ndpage.html")
+        document.getElementById("congradulations_alert").style.visibility = "visible";
+        document.getElementById("congradulations").innerHTML = `Congradulations!! You Did It in ${m} minutes and ${s} seconds!`;
+        timer_run = false;
         return true;
     }
     else{
-        alert("Try Again")
-        location.assign("2ndpage.html")
+        document.getElementById("try_again_alert").style.visibility = "visible";
+        timer_run = false;
         return false;
     }
 }
-function restart(){ //deletes all inputs
+function restart(){ //deletes all inputs & restarts time
    let a= document.querySelectorAll(".input");
    for (i=0; i<a.length; i++){
       a[i].value = "";
       a[i].style.backgroundColor = "#fff7f8";
    }
+   s = 0;
+   m = 0;
 }
 function hint(){ //fills in a random input according to the original solved_board
     flag = true;
@@ -285,14 +294,16 @@ function hint(){ //fills in a random input according to the original solved_boar
                     counter++;
                }
             }
-            if(counter==a.length){
+            if(counter==a.length){ // if board is complete alert complete and break
                 alert("Board is complete! press Finish")
                 break;
             }
         }
     }
 }
-console.log(generate_board_in_specefied_difficulty(difficulty));
+function switch_page() {
+    location.assign("2ndpage.html");
+}
 
 
 

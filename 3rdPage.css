@@ -9,10 +9,17 @@ body{
     margin-top: 10px;
     text-align: center;
 }
+#timer{
+    display: inline;
+    position: relative;
+    left: -90px;
+    font-weight: bold;
+    font-size: 20px;
+}
 h1{
     display: inline;
     position: relative;
-    left: 20px;
+    /* left: 20px; */
 }
 #question_mark{
     position: relative;
@@ -20,7 +27,7 @@ h1{
     background:none;
     margin-bottom: 20px;
     font-size: 30px;
-    left: 100px;
+    left: 90px;
 }
 #floating_hint {
     font-size: 20px;
@@ -57,11 +64,66 @@ h1{
     color: black;
     text-shadow: none;
 }
+#congradulations_alert{
+    visibility: hidden;
+    position: absolute;
+    left: 415px;
+    width: 500px;
+    height: 470px;
+    background-color: black;
+    z-index: 1000; 
+}
+#congradulations{
+    position: relative;
+    top: 50px;
+    font-size: 30px;
+    color: white
+}
+#fireworks{
+    position: relative;
+    width: 500px;
+    top: 70px;
+}
+#switch_page_1{
+    position: relative;
+    z-index: 1500;
+    top: 100px;
+    height: 30px;
+    width: 100px;
+    font-weight: bold;
+    background-color: pink;
+
+}
+#try_again_alert{
+    visibility: hidden;
+    position: absolute;
+    left: 415px;
+    width: 495px;
+    height: 465px;
+    background-color: black;
+    z-index: 1000; 
+}
+#try_again_gif{
+    position: relative;
+    width: 495px;
+    height: 450px;
+}
+#switch_page_2{
+    position: relative;
+    z-index: 1500;
+    top: -40px;
+    background-color: pink;
+    height: 30px;
+    width: 100px;
+    font-weight: bold;
+    
+}
 table{
     position: relative;
     border: 2px solid black;
     border-collapse: collapse;
     margin: auto;
+    background-color: rgb(255, 220, 226);
 }
 tr,td{
     border: 1px solid black;
@@ -115,3 +177,4 @@ input{
 input:hover{
     background-color: #d6b8c6;
 }
+
